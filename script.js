@@ -6,8 +6,16 @@ $(document).ready(function(){
     console.log('document has loaded');
 });
 
+//set game board size
+function set_game_board_size(size) {
+    size_of_board = size;
+}
+
 //build board dynamically based on chosen board size (visually)
-    //choose random win_length - for boards larger than 3x3
+
+//choose random win_length - for boards larger than 3x3 (still should be run for 3x3)
+
+
 
 //build empty array to place markers in
 function create_empty_game(size_of_board) {
