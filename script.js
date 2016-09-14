@@ -10,7 +10,7 @@ $(document).ready(function(){
 
 function create_game_board() {
   var game_board_size = 3;
-    create_empty_game(3);
+    create_empty_game(5);
   
   for (var a = 0; a<game_board_size; a++) {
     var row_one = $('<div>', {id: "row0"+" "+a}).text("index" + a).addClass('mark_spot');
@@ -33,6 +33,8 @@ function player_make_move(){
 
 function area_checked(){
   console.log("Clicked");
+    console.log('row',$(this).attr('row'));
+    console.log('column',$(this).attr('column'));
 }
 
 //set game board size
@@ -79,17 +81,30 @@ num_of_winning_matches_needed();
 
 //build empty array to place markers in
 function create_empty_game(size_of_board) {
-    stored_game_data = [];
-    for (var row = 0; row < size_of_board; row++) {
-        stored_game_data[row] = [];
-        for (var columns = 0; columns < size_of_board; columns++) {
-            stored_game_data[row][columns] = null;
+    // game_board_size = 3;        //temporarily hard set game_board_size
+    // size_of_board = 3;          //temporarily hard set to 3
+    stored_game_data = [];      //reset stored_game_data to blank array
+
+    for (var row = 0; row < size_of_board; row++) {         //run through the rows from row 0 through the end of the game board
+        stored_game_data[row] = [];         //create empty row of game data
+        var row_of_divs = $('<div>');       //create a dom element of a row for cells to go into
+
+        for (var column = 0; column < size_of_board; column++) {     //run through the columns from column 0 through the length of the game board
+            stored_game_data[row][column] = null;      //create the empty cell in the array
+
+            var cell = $('<div>').addClass('cell').attr('row',row).attr('column', column).addClass('mark_spot');      //create the cell DOM element with attributes row and column
+            row_of_divs.append(cell);       //append the cell to the row
         }
+        $('body').append(row_of_divs);      //append the row to the body
     }
 }
 
-//add a single marker to the game board (visually)
 
+
+//add a single marker to the game board (visually)
+function addMarkerToBoard(){
+
+}
 
 //add a single marker to the game array
 
