@@ -4,16 +4,7 @@ var stored_game_data = null;
 
 $(document).ready(function(){
     console.log('document has loaded');
-    readyClickHandlers();
 });
-
-//readies the click handler events
-function readyClickHandlers(){
-    // $('div').cl
-}
-
-
-
 
 //set game board size
 function set_game_board_size(size) {
