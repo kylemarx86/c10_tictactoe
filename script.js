@@ -1,7 +1,7 @@
 //list of variables
 var game_board_size = null;
 var stored_game_data = null;
-
+var its_player_ones_turn = null;
 
 $(document).ready(function(){
   create_game_board();
@@ -10,8 +10,9 @@ $(document).ready(function(){
 
 function create_game_board() {
     // game_board_size = 3;        //temporarily hard set game_board_size
-    size_of_board = 3;          //temporarily hard set to 3
+    size_of_board = 5;          //temporarily hard set to 3
     stored_game_data = [];      //reset stored_game_data to blank array
+    its_player_ones_turn = true;        //at start of the game player one will start
 
     for (var row = 0; row < size_of_board; row++) {         //run through the rows from row 0 through the end of the game board
         stored_game_data[row] = [];         //create empty row of game data
@@ -39,11 +40,15 @@ function area_checked(){
     console.log('row', row);
     console.log('column', column);
 
-    if(stored_game_data[row][column] === null){
-        stored_game_data[row][column] = 1;
-
+    if(stored_game_data[row][column] === null){     //check to see if the clicked cell is null/empty
+        if(its_player_ones_turn){
+            stored_game_data[row][column] = 1;    //if it is player ones turn put a one in the given cell of the game array
+        }else {
+            stored_game_data[row][column] = 2;       //if it is player twos turn put a 2 in the given cell of the game array
+        }
+        its_player_ones_turn = !its_player_ones_turn;       //if the person made a legitimate move then the players turn will switch
     }else {
-        console.log('spot taken');
+        console.log('spot taken');      //not sure we need this case //leave it just in case there is something to account for
     }
 
     console.log(stored_game_data);
