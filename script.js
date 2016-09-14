@@ -10,6 +10,7 @@ $(document).ready(function(){
 
 function create_game_board() {
   var game_board_size = 3;
+    create_empty_game(3);
   
   for (var a = 0; a<game_board_size; a++) {
     var row_one = $('<div>', {id: "row0"+" "+a}).text("index" + a).addClass('mark_spot');
@@ -23,6 +24,7 @@ function create_game_board() {
     var row_three = $('<div>', {id: "row2"+" "+c}).text("index" + c).addClass('mark_spot');
     $('.game_board').append(row_three);
   }
+
 }
 
 function player_make_move(){
@@ -78,10 +80,10 @@ num_of_winning_matches_needed();
 //build empty array to place markers in
 function create_empty_game(size_of_board) {
     stored_game_data = [];
-    for (var rows = 0; rows < size_of_board; rows++) {
-        stored_game_data[rows] = [];
+    for (var row = 0; row < size_of_board; row++) {
+        stored_game_data[row] = [];
         for (var columns = 0; columns < size_of_board; columns++) {
-            stored_game_data[rows][columns] = null;
+            stored_game_data[row][columns] = null;
         }
     }
 }
