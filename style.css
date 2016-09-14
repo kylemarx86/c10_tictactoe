@@ -1,0 +1,30 @@
+body{
+    margin: 0;
+}
+
+.wrapper{
+
+}
+
+header{
+    background: lightgray;
+    height: 150px;
+    margin-bottom: 50px;
+}
+.game_board{
+    margin: 0 auto;
+    width: 600px;
+    height: 400px;
+}
+
+.mark_spot{
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    background-color: #3c948b;
+    color: #ffffff;
+    text-align: center;
+
+
+}
