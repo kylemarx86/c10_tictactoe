@@ -15,9 +15,9 @@
         <div id="new_game"><a href="#openModal">New Game</a></div>
         <!--start music on/off toggle div-->
         <div id="music">
-            <audio id="myAudio"
-            <source src="sounds/space_debris.mp3"
-                    type='audio/mp3'>
+            <audio id="myAudio">
+                <source src="sounds/space_debris.mp3"
+                        type='audio/mp3'>
             </audio>
             <button id="music_toggle" type="button" onclick="aud_play_pause()">music on/off</button>
         </div>
@@ -27,18 +27,18 @@
         <div id="openModal" class="modalDialog">
             <div>
                 <h2>Choose Board Size:</h2>
-                <button onclick="set_game_board_size(3)">
-                    <a href="#close" title="Close" class="close">
+                <a href="#close" class="close">
+                    <button onclick="set_game_board_size(3)">
                         3x3
-                    </a>
-                </button>
-                <button onclick="set_game_board_size(9)">
-                    <a href="#close" title="Close" class="close">
+                    </button>
+                </a>
+                <a href="#close" class="close">
+                    <button onclick="set_game_board_size(9)">
                         9x9
-                    </a>
-                </button>
-                <button onclick="set_game_board_size(20)">
-                    <a href="#close" title="Close" class="close">
+                    </button>
+                </a>
+                <a href="#close" class="close">
+                    <button onclick="set_game_board_size(20)">
                         20x20
                     </button>
                 </a>
