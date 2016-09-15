@@ -1,5 +1,6 @@
 body{
  margin: 0;
+    background-color: black;
 }
 
 h1{
@@ -41,6 +42,7 @@ header{
     color: white;
     font-family: 'Faster One', cursive;
 }
+
 .player2_side{
     background-image: url("img/russian.png");
     background-repeat: no-repeat;
@@ -74,24 +76,26 @@ header{
 .game_board{
     text-align: center;
     font-size: 0;
+    height: 100vh;
 }
 
-.mark_spot{
+.selection_box{
     display: inline-block;
     width: 2vw;
     height: 2vw;
-    line-height: 200px;
     background-color: #040508;
     color: #ffffff;
     text-align: center;
     border: 1px solid white;
-    font-size: inherit;
+    vertical-align: bottom;
+    font-size: 2vh;
+    text-align: center;
 }
 
 /* .modal is referring to the screen/window that pops up when New Game is clicked */
 .modalDialog {
     position: fixed;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Faster One', cursive;
     top: 0;
     right: 0;
     bottom: 0;
@@ -118,37 +122,51 @@ header{
     padding: 5px 20px 13px 20px;
     border-radius: 20px;
     background: #000000;
-    color: white;
+    color: #F05A23;
+    font-family: 'Faster One', cursive;
+    font-size: 2em;
 }
-/* this is for the links in the popup board size selection screen */
+
+/* this is for the text in the buttons on the popup board size selection screen*/
 .modalDialog button {
     border: 1px solid white;
     background-color: black;
-    border-radius: 20%
-}
-
-/* this is for the links in the popup board size selection screen */
-.modalDialog a:link,
-.modalDialog a:active,
-.modalDialog a:hover,
-.modalDialog a:visited {
+    border-radius: 20%;
     color: white;
 }
 
-#new_game a:link,
-#new_game a:active,
-#new_game a:hover,
-#new_game a:visited {
-    float: right;
-    bottom: 10%;
+/* this is for the buttons in the popup board size selection screen */
+a.close {
+    text-decoration: none;
+    color: white;
+}
+#new_game a {
     display: inline-block;
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Faster One', cursive;
     text-decoration: none;
-    font-weight: bold;
-    border: 1px solid white;
-    border-radius: 15%;
-    /*border: 1px solid black;*/
+    /*border: 1px solid white;*/
+    width: 100%;
+    font-size: 1em;
+    text-align: center;
+    position: relative;
+}
+
+#music {
+    text-align: center;
+    position: absolute;
+    display: inline-block;
+    width: 100%;
+}
+
+#music_toggle {
+    color: white;
+    background-color: #121A22;
+    border: 0;
+    font-size: 1em;
+    display: inline-block;
+    font-family: 'Faster One', cursive;
+
 }
 
 footer{
