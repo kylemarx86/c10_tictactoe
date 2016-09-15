@@ -1,9 +1,8 @@
 //list of variables
-var size_of_board = null;
 var game_board_size = null;
 var stored_game_data = null;
 var its_player_ones_turn = null;
-
+var winning_matches = null;
 
 $(document).ready(function(){
     $("#new_game").click(function(){  //when the new game link is clicked, the game board is cleared of all elements.
@@ -12,16 +11,14 @@ $(document).ready(function(){
 });
 
 function create_game_board() {
-    // game_board_size = 3;        //temporarily hard set game_board_size
-    // size_of_board = 5;          //temporarily hard set to 3
     stored_game_data = [];      //reset stored_game_data to blank array
     its_player_ones_turn = true;        //at start of the game player one will start
 
-    for (var row = 0; row < size_of_board; row++) {         //run through the rows from row 0 through the end of the game board
+    for (var row = 0; row < game_board_size; row++) {         //run through the rows from row 0 through the end of the game board
         stored_game_data[row] = [];         //create empty row of game data
         var row_of_divs = $('<div>');       //create a dom element of a row for cells to go into
 
-        for (var column = 0; column < size_of_board; column++) {     //run through the columns from column 0 through the length of the game board
+        for (var column = 0; column < game_board_size; column++) {     //run through the columns from column 0 through the length of the game board
             stored_game_data[row][column] = null;      //create the empty cell in the array
 
             var cell = $('<div>').addClass('cell').attr('row',row).attr('column', column).addClass('mark_spot');      //create the cell DOM element with attributes row and column
@@ -36,7 +33,7 @@ function player_make_move(){
 }
 
 function area_checked(){
-  console.log("Clicked");
+  // console.log("Clicked");
     var row = $(this).attr('row');
     var column = $(this).attr('column');
 
@@ -55,7 +52,7 @@ function area_checked(){
     }else {
         console.log('spot taken');      //not sure we need this case //leave it just in case there is something to account for
     }
-    console.log(stored_game_data);
+    // console.log(stored_game_data);
 }
 
 //set game board size
@@ -123,8 +120,6 @@ function addMarkerToBoard(){
 function check_for_wins(clicked_row, clicked_column){
     var you_won = false;
 
-    // var you_won = false;
-
     var current_row = null;
     var current_column = null;
 
@@ -140,8 +135,10 @@ function check_for_wins(clicked_row, clicked_column){
         direction_vector = {row: 0, column: 1};                         //checking right
         matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        if(matches_connected >= win_length)
+        if(matches_connected >= winning_matches) {
             you_won = true;
+            console.log('you won!!!');
+        }
         console.log('number matching in row: ' + matches_connected);
     }
     if(!you_won){
@@ -152,8 +149,10 @@ function check_for_wins(clicked_row, clicked_column){
         direction_vector = {row: 1, column: 0};                        //checking down
         matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        if(matches_connected >= win_length)
+        if(matches_connected >= winning_matches) {
             you_won = true;
+            console.log('you won!!!');
+        }
         console.log('number matching in column: ' + matches_connected);
     }
     if(!you_won){
@@ -164,8 +163,10 @@ function check_for_wins(clicked_row, clicked_column){
         direction_vector = {row: 1, column: 1};                             //checking down-right
         matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        if(matches_connected >= win_length)
+        if(matches_connected >= winning_matches) {
             you_won = true;
+            console.log('you won!!!');
+        }
         console.log('number matching in diag1: ' + matches_connected);
     }
     if(!you_won){
@@ -176,8 +177,10 @@ function check_for_wins(clicked_row, clicked_column){
         direction_vector = {row: 1, column: -1};                        //checking down-left
         matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        if(matches_connected >= win_length)
+        if(matches_connected >= winning_matches) {
             you_won = true;
+            console.log('you won!!!');
+        }
         console.log('number matching in diag2: ' + matches_connected);
     }
 }
@@ -240,11 +243,11 @@ function find_matches_in_single_direction(clicked_cell, direction_vector, matche
     var does_not_exist = false;     //variable to keep track if the new cell actually exists/ falls within the game board
     var does_not_match = false;     //variable to keep track if the new cell matches the original cell clicked
 
-    current_row = parseInt(clicked_cell.row);
-    current_column = parseInt(clicked_cell.column);
+    var current_row = parseInt(clicked_cell.row);
+    var current_column = parseInt(clicked_cell.column);
 
-    row_movement = parseInt(direction_vector.row);
-    column_movement = parseInt(direction_vector.column);
+    var row_movement = parseInt(direction_vector.row);
+    var column_movement = parseInt(direction_vector.column);
 
     while(!does_not_exist && !does_not_match){
         //don't just decrease column add the component parts of the row and column to the clicked cell
@@ -254,9 +257,9 @@ function find_matches_in_single_direction(clicked_cell, direction_vector, matche
         //check to see if the cell exists
         if((0 <= current_row && current_row < game_board_size) &&
             (0 <= current_column && current_column < game_board_size)){   //check to see that current row and column are within the  scope of game board data
-            if(stored_array[clicked_row][clicked_column] === stored_array[current_row][current_column]){   //if clicked cell's data equals current cell's data
+            if(stored_game_data[clicked_cell.row][clicked_cell.column] === stored_game_data[current_row][current_column]){   //if clicked cell's data equals current cell's data
                 matches_connected++;         //increase the number of connected
-                if(matches_connected >= win_length){
+                if(matches_connected >= winning_matches){
                     console.log('you won');
                     return matches_connected;
                 }
@@ -266,8 +269,8 @@ function find_matches_in_single_direction(clicked_cell, direction_vector, matche
         }else{  //the cell does not exist in the game board data
             does_not_exist = true;
         }
-        return matches_connected;
     }
+    return matches_connected;
 }
 
 
