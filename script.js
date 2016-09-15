@@ -2,15 +2,16 @@
 var game_board_size = null;
 var stored_game_data = null;
 var its_player_ones_turn = null;
+var player_ones_turn = true;
 
 $(document).ready(function(){
   create_game_board();
-  player_make_move();
+  player_make_move;
 });
 
 function create_game_board() {
     // game_board_size = 3;        //temporarily hard set game_board_size
-    size_of_board = 5;          //temporarily hard set to 3
+    size_of_board = 20;          //temporarily hard set to 3
     stored_game_data = [];      //reset stored_game_data to blank array
     its_player_ones_turn = true;        //at start of the game player one will start
 
@@ -28,31 +29,37 @@ function create_game_board() {
     }
 }
 
-function player_make_move(){
-  $('.mark_spot').click(area_checked);
-}
 
-function area_checked(){
-  console.log("Clicked");
-    var row = $(this).attr('row');
-    var column = $(this).attr('column');
 
-    console.log('row', row);
-    console.log('column', column);
 
-    if(stored_game_data[row][column] === null){     //check to see if the clicked cell is null/empty
-        if(its_player_ones_turn){
-            stored_game_data[row][column] = 1;    //if it is player ones turn put a one in the given cell of the game array
-        }else {
-            stored_game_data[row][column] = 2;       //if it is player twos turn put a 2 in the given cell of the game array
-        }
-        its_player_ones_turn = !its_player_ones_turn;       //if the person made a legitimate move then the players turn will switch
-    }else {
-        console.log('spot taken');      //not sure we need this case //leave it just in case there is something to account for
-    }
-
-    console.log(stored_game_data);
-}
+/*
+function area_checked() {
+  var this_square = $(this).attr('row');
+  if (player_ones_turn === true) {
+    console.log("Clicked" + this_square);
+    stored_game_data[row][column] = 1;
+  }
+  */
+  /*console.log("Clicked");
+   var row = $(this).attr('row');
+   var column = $(this).attr('column');
+   
+   console.log('row', row);
+   console.log('column', column);
+   
+   if(stored_game_data[row][column] === null){     //check to see if the clicked cell is null/empty
+   if(its_player_ones_turn){
+   stored_game_data[row][column] = 1;    //if it is player ones turn put a one in the given cell of the game array
+   }else {
+   stored_game_data[row][column] = 2;       //if it is player twos turn put a 2 in the given cell of the game array
+   }
+   its_player_ones_turn = !its_player_ones_turn;       //if the person made a legitimate move then the players turn will switch
+   }else {
+   console.log('spot taken');      //not sure we need this case //leave it just in case there is something to account for
+   }
+   console.log(stored_game_data);
+   }
+   */
 
 //set game board size
 function set_game_board_size(size) {
@@ -66,7 +73,7 @@ function set_game_board_size(size) {
 function num_of_winning_matches_needed() {
     //3 board size variables (booleans) created to test this function
     //var board_20 isn't actually needed, as it would be caught by the "else" statement
-    var board_3 = false;
+    var board_ = false;
     var board_9 = true;
     var board_20 = false;
     //if board is 3x3, # of matches needed to win will be 3
