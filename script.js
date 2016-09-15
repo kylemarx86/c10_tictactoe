@@ -36,12 +36,9 @@ function player_make_move(){
 function area_checked() {
     var row = $(this).attr('row');
     var column = $(this).attr('column');
-
-    console.log('row', row);
-    console.log('column', column);
-
-    if (stored_game_data[row][column] === null) {     //check to see if the clicked cell is null/empty
-        if (its_player_ones_turn) {
+  
+    if(stored_game_data[row][column] === null){     //check to see if the clicked cell is null/empty
+        if(its_player_ones_turn){
             stored_game_data[row][column] = 1;    //if it is player ones turn put a one in the given cell of the game array
             check_for_wins(row, column);            //check for wins
         }else {
@@ -56,8 +53,19 @@ function area_checked() {
 }
 
 function place_symbol_in_cell(target_cell, player_number){
-  target_cell.text(player_number);
+  
+  var player_mark;
+  if (player_number === 1){
+    player_mark = "X";
+  }else{
+    player_mark = "O";
+  }
+  target_cell.text(player_mark);
 }
+
+//Determine Wins
+
+
 //set game board size
 //game board size parameter is passed when the player clicks on the game board selection screen
 function set_game_board_size(size) {

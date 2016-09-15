@@ -1,3 +1,4 @@
+/* Global Styles */
 body{
  margin: 0;
     background-color: black;
@@ -8,16 +9,19 @@ h1{
     text-align: center;
     vertical-align: middle;
 }
+
+/* Main Game Area */
 .wrapper{
     height: 100%;
     background-color: #040508;
 }
 
+/* Navigation Area */
+
 header{
     background-image: url("img/space-background.png");
     background-repeat: no-repeat;
     background-size: cover;
-    margin-bottom: 1%;
 }
 
 .player1_side{
@@ -73,12 +77,20 @@ header{
     width: 200px;
 }
 
+/* notification_area */
+.notification_area{
+ height: 100px;
+ background-color: #000000;
+}
+
+/* Main Game Area */
 .game_board{
     text-align: center;
     font-size: 0;
     height: 100vh;
 }
 
+/* This is the area plays click on */
 .selection_box{
     display: inline-block;
     width: 2vw;
@@ -169,6 +181,7 @@ a.close {
 
 }
 
+/* footer area */
 footer{
     height: 5vh;
     background-color: #040508;
