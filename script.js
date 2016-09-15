@@ -30,26 +30,27 @@ function create_game_board() {
     }
 }
 
+
 function player_make_move(){
   $('.selection_box').click(area_checked);
 }
 
-function area_checked(){
-  console.log("Clicked");
+function area_checked() {
+    console.log("Clicked");
     var row = $(this).attr('row');
     var column = $(this).attr('column');
 
     console.log('row', row);
     console.log('column', column);
 
-    if(stored_game_data[row][column] === null){     //check to see if the clicked cell is null/empty
-        if(its_player_ones_turn){
+    if (stored_game_data[row][column] === null) {     //check to see if the clicked cell is null/empty
+        if (its_player_ones_turn) {
             stored_game_data[row][column] = 1;    //if it is player ones turn put a one in the given cell of the game array
-        }else {
+        } else {
             stored_game_data[row][column] = 2;       //if it is player twos turn put a 2 in the given cell of the game array
         }
         its_player_ones_turn = !its_player_ones_turn;       //if the person made a legitimate move then the players turn will switch
-    }else {
+    } else {
         console.log('spot taken');      //not sure we need this case //leave it just in case there is something to account for
     }
     place_symbol_in_cell($(this), stored_game_data[row][column]);
@@ -74,24 +75,23 @@ function num_of_winning_matches_needed(size) {
     //if board is 3x3, # of matches needed to win will be 3
     if (size === 3) {
         winning_matches = 3;
-        console.log("number of matches needed for 3x3 board: "+winning_matches);
+        console.log("number of matches needed for 3x3 board: " + winning_matches);
     }
     //if board is 9x9
     //Math.Random gives random # from 0 - .9999[...]
     // Math.floor gives whole number, *3 + 3 multiplies whole number by 6 and adds 3 (minimum # of matches needed are 3).
     else if (size === 9) {
         winning_matches = Math.floor(Math.random() * 6 + 4);
-        console.log("number of matches needed for 9x9 board: "+winning_matches);
+        console.log("number of matches needed for 9x9 board: " + winning_matches);
     }
     //otherwise, for a 20x20 board,
     //Math.Random gives random # from 0 - .9999[...]
     // Math.floor gives whole number, *17 + 3 multiplies whole number by 17 and adds 3 (minimum # of matches needed are 3).
     else {
         winning_matches = Math.floor(Math.random() * 17 + 4);
-        console.log("number of matches needed for 20x20 board: "+winning_matches);
+        console.log("number of matches needed for 20x20 board: " + winning_matches);
     }
 }
-
 
 
 //build empty array to place markers in
@@ -100,9 +100,8 @@ function create_empty_game(size_of_board) {
 }
 
 
-
 //add a single marker to the game board (visually)
-function addMarkerToBoard(){
+function addMarkerToBoard() {
 
 }
 
@@ -122,3 +121,13 @@ function addMarkerToBoard(){
 
 
 //retire from game: go to home screen
+
+
+function aud_play_pause() {
+    var myAudio = document.getElementById("myAudio");
+    if (myAudio.paused) {
+        myAudio.play();
+    } else {
+        myAudio.pause();
+    }
+}
