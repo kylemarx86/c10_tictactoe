@@ -12,12 +12,22 @@
 <div class="wrapper">
     <header>
 
-        <!-- start new_game div & link -->
+        <!-- start new_game div & link - includes music toggle  -->
         <div id="new_game">
             <a href="#openModal">
                 New Game
             </a>
         </div>
+        <!--end new game div -->
+        <!--start music on/off toggle div-->
+        <div id="music">
+            <audio id="myAudio"
+            <source src="sounds/space_debris.mp3"
+                    type='audio/mp3'>
+            </audio>
+            <button id="music_toggle" type="button" onclick="aud_play_pause()">music on/off</button>
+        </div>
+        <!--end music toggle div -->
         <!-- begin board size pop-up -->
         <div id="openModal" class="modalDialog">
             <div>
