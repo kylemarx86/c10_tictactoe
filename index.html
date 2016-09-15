@@ -13,22 +13,26 @@
     <header>
 
         <!-- start new_game div & link -->
-        <div id="new_game"><a href="#openModal">New Game</a></div>
+        <div id="new_game">
+            <a href="#openModal">
+                New Game
+            </a>
+        </div>
         <!-- begin board size pop-up -->
         <div id="openModal" class="modalDialog">
             <div>
                 <p>Choose Board Size:</p>
-                <a href="#close" title="Close" class="close">
+                <a href="#close" class="close">
                     <button onclick="set_game_board_size(3); num_of_winning_matches_needed(3); create_game_board(); player_make_move();">
                         3x3
                     </button>
                 </a>
-                <a href="#close" title="Close" class="close">
+                <a href="#close" class="close">
                     <button onclick="set_game_board_size(9); num_of_winning_matches_needed(9); create_game_board(); player_make_move();">
                         9x9
                     </button>
                 </a>
-                <a href="#close" title="Close" class="close">
+                <a href="#close" class="close">
                     <button onclick="set_game_board_size(20); num_of_winning_matches_needed(20); create_game_board(); player_make_move();">
                         20x20
                     </button>
