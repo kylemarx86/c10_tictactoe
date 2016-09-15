@@ -55,7 +55,6 @@ function area_checked(){
     }else {
         console.log('spot taken');      //not sure we need this case //leave it just in case there is something to account for
     }
-
     console.log(stored_game_data);
 }
 
@@ -122,67 +121,132 @@ function addMarkerToBoard(){
 
 //function that will check if the currently clicked spot creates a win condition
 function check_for_wins(clicked_row, clicked_column){
-    this.you_won = false;
+    var you_won = false;
+
     // var you_won = false;
-
-
-    this.clicked_row = clicked_row;
-    this.clicked_column = clicked_column;
-    // var clicked_row = clicked_row;
-    // var clicked_column = clicked_column;
 
     var current_row = null;
     var current_column = null;
 
-    this.number_connected = null;
-    // var number_connected = null;
+    var clicked_cell = {'row': clicked_row, 'column': clicked_column};
+    var direction_vector = {'row': null, 'column': null};
+    var matches_connected = null;
 
     if(!you_won){
         //check row for wins
-        number_connected = 1;
-        find_matches_in_single_direction(0, -1);    //checking left
-        find_matches_in_single_direction(0, 1);     //checking right
+        matches_connected = 1;
+        direction_vector = {row: 0, column: -1};                        //checking left
+        matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
+        direction_vector = {row: 0, column: 1};                         //checking right
+        matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        console.log('number matching in row: ' + number_connected);
+        if(matches_connected >= win_length)
+            you_won = true;
+        console.log('number matching in row: ' + matches_connected);
     }
     if(!you_won){
-        //check row for wins
-        number_connected = 1;
-        find_matches_in_single_direction(-1, 0);    //checking up
-        find_matches_in_single_direction(1, 0);     //checking down
+        //check columns for wins
+        matches_connected = 1;
+        direction_vector = {row: -1, column: 0};                        //checking up
+        matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
+        direction_vector = {row: 1, column: 0};                        //checking down
+        matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        console.log('number matching in column: ' + number_connected);
+        if(matches_connected >= win_length)
+            you_won = true;
+        console.log('number matching in column: ' + matches_connected);
     }
     if(!you_won){
         //check right diagonal for wins
-        number_connected = 1;
-        find_matches_in_single_direction(-1, -1);   //checking up-left
-        find_matches_in_single_direction(1, 1);     //checking down-right
+        matches_connected = 1;
+        direction_vector = {row: -1, column: -1};                           //checking up-left
+        matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
+        direction_vector = {row: 1, column: 1};                             //checking down-right
+        matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        console.log('number matching in diag1: ' + number_connected);
+        if(matches_connected >= win_length)
+            you_won = true;
+        console.log('number matching in diag1: ' + matches_connected);
     }
     if(!you_won){
         //check left diagonal for wins
-        number_connected = 1;
-        find_matches_in_single_direction(-1, 1);    //checking up-right
-        find_matches_in_single_direction(1, -1);    //checking down-left
+        matches_connected = 1;
+        direction_vector = {row: -1, column: 1};                        //checking up-right
+        matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
+        direction_vector = {row: 1, column: -1};                        //checking down-left
+        matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        console.log('number matching in diag2: ' + number_connected);
+        if(matches_connected >= win_length)
+            you_won = true;
+        console.log('number matching in diag2: ' + matches_connected);
     }
 }
 
 
+// //function that will check if the currently clicked spot creates a win condition
+// function check_for_wins(clicked_row, clicked_column){
+//     this.you_won = false;
+//     // var you_won = false;
+//
+//
+//     // this.clicked_row = clicked_row;
+//     // this.clicked_column = clicked_column;
+//     var row = clicked_row;
+//     var column = clicked_column;
+//
+//     var current_row = null;
+//     var current_column = null;
+//
+//     this.matches_connected = null;
+//     // var matches_connected = null;
+//
+//     if(!you_won){
+//         //check row for wins
+//         matches_connected = 1;
+//         find_matches_in_single_direction(0, -1);    //checking left
+//         find_matches_in_single_direction(0, 1);     //checking right
+//
+//         console.log('number matching in row: ' + matches_connected);
+//     }
+//     if(!you_won){
+//         //check row for wins
+//         matches_connected = 1;
+//         find_matches_in_single_direction(-1, 0);    //checking up
+//         find_matches_in_single_direction(1, 0);     //checking down
+//
+//         console.log('number matching in column: ' + matches_connected);
+//     }
+//     if(!you_won){
+//         //check right diagonal for wins
+//         matches_connected = 1;
+//         find_matches_in_single_direction(-1, -1);   //checking up-left
+//         find_matches_in_single_direction(1, 1);     //checking down-right
+//
+//         console.log('number matching in diag1: ' + matches_connected);
+//     }
+//     if(!you_won){
+//         //check left diagonal for wins
+//         matches_connected = 1;
+//         find_matches_in_single_direction(-1, 1);    //checking up-right
+//         find_matches_in_single_direction(1, -1);    //checking down-left
+//
+//         console.log('number matching in diag2: ' + matches_connected);
+//     }
+// }
 
 
 //looks for matches in the direction of movement passed by the parameters: row_movement and column_movement
-function find_matches_in_single_direction(row_movement, column_movement) {
+function find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected) {
     var does_not_exist = false;     //variable to keep track if the new cell actually exists/ falls within the game board
     var does_not_match = false;     //variable to keep track if the new cell matches the original cell clicked
 
-    current_row = parseInt(clicked_row);
-    current_column = parseInt(clicked_column);
+    current_row = parseInt(clicked_cell.row);
+    current_column = parseInt(clicked_cell.column);
 
-    while(!does_not_exist && !does_not_match && !you_won){
+    row_movement = parseInt(direction_vector.row);
+    column_movement = parseInt(direction_vector.column);
+
+    while(!does_not_exist && !does_not_match){
         //don't just decrease column add the component parts of the row and column to the clicked cell
         current_row += row_movement;
         current_column += column_movement;
@@ -191,10 +255,10 @@ function find_matches_in_single_direction(row_movement, column_movement) {
         if((0 <= current_row && current_row < game_board_size) &&
             (0 <= current_column && current_column < game_board_size)){   //check to see that current row and column are within the  scope of game board data
             if(stored_array[clicked_row][clicked_column] === stored_array[current_row][current_column]){   //if clicked cell's data equals current cell's data
-                number_connected++;         //increase the number of connected
-                if(number_connected >= win_length){
+                matches_connected++;         //increase the number of connected
+                if(matches_connected >= win_length){
                     console.log('you won');
-                    you_won = true;
+                    return matches_connected;
                 }
             }else{  //numbers in the cells do not match in this direction
                 does_not_match = true;
@@ -202,5 +266,38 @@ function find_matches_in_single_direction(row_movement, column_movement) {
         }else{  //the cell does not exist in the game board data
             does_not_exist = true;
         }
+        return matches_connected;
     }
 }
+
+
+// //looks for matches in the direction of movement passed by the parameters: row_movement and column_movement
+// function find_matches_in_single_direction(row_movement, column_movement) {
+//     var does_not_exist = false;     //variable to keep track if the new cell actually exists/ falls within the game board
+//     var does_not_match = false;     //variable to keep track if the new cell matches the original cell clicked
+//
+//     current_row = parseInt(clicked_row);
+//     current_column = parseInt(clicked_column);
+//
+//     while(!does_not_exist && !does_not_match && !you_won){
+//         //don't just decrease column add the component parts of the row and column to the clicked cell
+//         current_row += row_movement;
+//         current_column += column_movement;
+//
+//         //check to see if the cell exists
+//         if((0 <= current_row && current_row < game_board_size) &&
+//             (0 <= current_column && current_column < game_board_size)){   //check to see that current row and column are within the  scope of game board data
+//             if(stored_array[clicked_row][clicked_column] === stored_array[current_row][current_column]){   //if clicked cell's data equals current cell's data
+//                 matches_connected++;         //increase the number of connected
+//                 if(matches_connected >= win_length){
+//                     console.log('you won');
+//                     you_won = true;
+//                 }
+//             }else{  //numbers in the cells do not match in this direction
+//                 does_not_match = true;
+//             }
+//         }else{  //the cell does not exist in the game board data
+//             does_not_exist = true;
+//         }
+//     }
+// }
