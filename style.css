@@ -58,7 +58,7 @@ header{
     background: #000000;
     color: white;
 }
-
+/* this is for the links in the popup board size selection screen */
 .modalDialog button {
     border: 1px solid white;
     background-color: black;
@@ -82,5 +82,9 @@ header{
     display: inline-block;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid white;
+    border-radius: 15%;
     /*border: 1px solid black;*/
 }
