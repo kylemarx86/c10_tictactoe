@@ -1,4 +1,5 @@
 //list of variables
+var size_of_board = null;
 var game_board_size = null;
 var stored_game_data = null;
 var its_player_ones_turn = null;
@@ -45,8 +46,10 @@ function area_checked(){
     if(stored_game_data[row][column] === null){     //check to see if the clicked cell is null/empty
         if(its_player_ones_turn){
             stored_game_data[row][column] = 1;    //if it is player ones turn put a one in the given cell of the game array
+            check_for_wins(row, column);            //check for wins
         }else {
             stored_game_data[row][column] = 2;       //if it is player twos turn put a 2 in the given cell of the game array
+            check_for_wins(row, column);                //check for wins
         }
         its_player_ones_turn = !its_player_ones_turn;       //if the person made a legitimate move then the players turn will switch
     }else {
@@ -59,7 +62,10 @@ function area_checked(){
 //set game board size
 //game board size parameter is passed when the player clicks on the game board selection screen
 function set_game_board_size(size) {
-    size_of_board = size;
+    game_board_size = size;
+    num_of_winning_matches_needed(game_board_size);
+    create_game_board();
+    player_make_move();
 }
 
 //build board dynamically based on chosen board size (visually)
@@ -91,13 +97,6 @@ function num_of_winning_matches_needed(size) {
 
 
 
-//build empty array to place markers in
-function create_empty_game(size_of_board) {
-
-}
-
-
-
 //add a single marker to the game board (visually)
 function addMarkerToBoard(){
 
@@ -119,3 +118,89 @@ function addMarkerToBoard(){
 
 
 //retire from game: go to home screen
+
+
+//function that will check if the currently clicked spot creates a win condition
+function check_for_wins(clicked_row, clicked_column){
+    this.you_won = false;
+    // var you_won = false;
+
+
+    this.clicked_row = clicked_row;
+    this.clicked_column = clicked_column;
+    // var clicked_row = clicked_row;
+    // var clicked_column = clicked_column;
+
+    var current_row = null;
+    var current_column = null;
+
+    this.number_connected = null;
+    // var number_connected = null;
+
+    if(!you_won){
+        //check row for wins
+        number_connected = 1;
+        find_matches_in_single_direction(0, -1);    //checking left
+        find_matches_in_single_direction(0, 1);     //checking right
+
+        console.log('number matching in row: ' + number_connected);
+    }
+    if(!you_won){
+        //check row for wins
+        number_connected = 1;
+        find_matches_in_single_direction(-1, 0);    //checking up
+        find_matches_in_single_direction(1, 0);     //checking down
+
+        console.log('number matching in column: ' + number_connected);
+    }
+    if(!you_won){
+        //check right diagonal for wins
+        number_connected = 1;
+        find_matches_in_single_direction(-1, -1);   //checking up-left
+        find_matches_in_single_direction(1, 1);     //checking down-right
+
+        console.log('number matching in diag1: ' + number_connected);
+    }
+    if(!you_won){
+        //check left diagonal for wins
+        number_connected = 1;
+        find_matches_in_single_direction(-1, 1);    //checking up-right
+        find_matches_in_single_direction(1, -1);    //checking down-left
+
+        console.log('number matching in diag2: ' + number_connected);
+    }
+}
+
+
+
+
+//looks for matches in the direction of movement passed by the parameters: row_movement and column_movement
+function find_matches_in_single_direction(row_movement, column_movement) {
+    var does_not_exist = false;     //variable to keep track if the new cell actually exists/ falls within the game board
+    var does_not_match = false;     //variable to keep track if the new cell matches the original cell clicked
+
+    current_row = parseInt(clicked_row);
+    current_column = parseInt(clicked_column);
+
+    while(!does_not_exist && !does_not_match && !you_won){
+        //don't just decrease column add the component parts of the row and column to the clicked cell
+        current_row += row_movement;
+        current_column += column_movement;
+
+        //check to see if the cell exists
+        if((0 <= current_row && current_row < game_board_size) &&
+            (0 <= current_column && current_column < game_board_size)){   //check to see that current row and column are within the  scope of game board data
+            if(stored_array[clicked_row][clicked_column] === stored_array[current_row][current_column]){   //if clicked cell's data equals current cell's data
+                number_connected++;         //increase the number of connected
+                if(number_connected >= win_length){
+                    console.log('you won');
+                    you_won = true;
+                }
+            }else{  //numbers in the cells do not match in this direction
+                does_not_match = true;
+            }
+        }else{  //the cell does not exist in the game board data
+            does_not_exist = true;
+        }
+    }
+}
