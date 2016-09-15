@@ -17,15 +17,26 @@
         <div id="openModal" class="modalDialog">
             <div>
                 <h2>Choose Board Size:</h2>
-                <button onclick="create_game_board(3)"><a href="#close" title="Close" class="close">3x3</a></button>
-                <button onclick="create_game_board(9)"><a href="#close" title="Close" class="close">9x9</a></button>
-                <button onclick="create_game_board(20)"><a href="#close" title="Close" class="close">20x20</a></button>
+                <button onclick="set_game_board_size(3); num_of_winning_matches_needed(3); create_game_board(); player_make_move();">
+                    <a href="#close" title="Close" class="close">
+                        3x3
+                    </a>
+                </button>
+                <button onclick="set_game_board_size(9); num_of_winning_matches_needed(9); create_game_board(); player_make_move();">
+                    <a href="#close" title="Close" class="close">
+                        9x9
+                    </a>
+                </button>
+                <button onclick="set_game_board_size(20); num_of_winning_matches_needed(20); create_game_board(); player_make_move();">
+                    <a href="#close" title="Close" class="close">
+                        20x20
+                    </a>
+                </button>
             </div>
         </div>
         <!-- end board size pop-up -->
     </header>
     <div class="game_board">
-
     </div>
 </div>
 
