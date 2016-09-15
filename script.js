@@ -185,78 +185,29 @@ function check_for_wins(clicked_row, clicked_column){
     }
 }
 
-
-// //function that will check if the currently clicked spot creates a win condition
-// function check_for_wins(clicked_row, clicked_column){
-//     this.you_won = false;
-//     // var you_won = false;
-//
-//
-//     // this.clicked_row = clicked_row;
-//     // this.clicked_column = clicked_column;
-//     var row = clicked_row;
-//     var column = clicked_column;
-//
-//     var current_row = null;
-//     var current_column = null;
-//
-//     this.matches_connected = null;
-//     // var matches_connected = null;
-//
-//     if(!you_won){
-//         //check row for wins
-//         matches_connected = 1;
-//         find_matches_in_single_direction(0, -1);    //checking left
-//         find_matches_in_single_direction(0, 1);     //checking right
-//
-//         console.log('number matching in row: ' + matches_connected);
-//     }
-//     if(!you_won){
-//         //check row for wins
-//         matches_connected = 1;
-//         find_matches_in_single_direction(-1, 0);    //checking up
-//         find_matches_in_single_direction(1, 0);     //checking down
-//
-//         console.log('number matching in column: ' + matches_connected);
-//     }
-//     if(!you_won){
-//         //check right diagonal for wins
-//         matches_connected = 1;
-//         find_matches_in_single_direction(-1, -1);   //checking up-left
-//         find_matches_in_single_direction(1, 1);     //checking down-right
-//
-//         console.log('number matching in diag1: ' + matches_connected);
-//     }
-//     if(!you_won){
-//         //check left diagonal for wins
-//         matches_connected = 1;
-//         find_matches_in_single_direction(-1, 1);    //checking up-right
-//         find_matches_in_single_direction(1, -1);    //checking down-left
-//
-//         console.log('number matching in diag2: ' + matches_connected);
-//     }
-// }
-
-
-//looks for matches in the direction of movement passed by the parameters: row_movement and column_movement
+//looks for matches in the direction of movement passed by the parameters
+    //params: clicked_cell: the original cell that was clicked passed as an object containing row and column
+    //params: direction_vector: the direction we want to check for matches in. Passed as an object containing row and column
+    //params: mathces_connected: the number of consecutive squares that match the clicked square (including the clicked square itself)
+    //return: matches_connected: the number of consecutive squares that match the clicked square (including the clicked square itself)
 function find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected) {
     var does_not_exist = false;     //variable to keep track if the new cell actually exists/ falls within the game board
     var does_not_match = false;     //variable to keep track if the new cell matches the original cell clicked
 
-    var current_row = parseInt(clicked_cell.row);
-    var current_column = parseInt(clicked_cell.column);
+    var current_row = parseInt(clicked_cell.row);   //the row of the current cell we are checking for matches
+    var current_column = parseInt(clicked_cell.column);     //the column of the current cell we are checking for matches
 
-    var row_movement = parseInt(direction_vector.row);
-    var column_movement = parseInt(direction_vector.column);
+    var row_movement = parseInt(direction_vector.row);          //the direction the row is moving when checking for matches
+    var column_movement = parseInt(direction_vector.column);      //the direction the column is moving when checking for matches
 
     while(!does_not_exist && !does_not_match){
         //don't just decrease column add the component parts of the row and column to the clicked cell
-        current_row += row_movement;
-        current_column += column_movement;
+        current_row += row_movement;            //add the row component of the directional vector to get the new row of the current cell
+        current_column += column_movement;          //add the column component of the directional vector to get the new column of the current cell
 
         //check to see if the cell exists
-        if((0 <= current_row && current_row < game_board_size) &&
-            (0 <= current_column && current_column < game_board_size)){   //check to see that current row and column are within the  scope of game board data
+        if((0 <= current_row && current_row < game_board_size) &&                   //check to see that current row and column are within the  scope of game board data
+            (0 <= current_column && current_column < game_board_size)){
             if(stored_game_data[clicked_cell.row][clicked_cell.column] === stored_game_data[current_row][current_column]){   //if clicked cell's data equals current cell's data
                 matches_connected++;         //increase the number of connected
                 if(matches_connected >= winning_matches){
@@ -272,35 +223,3 @@ function find_matches_in_single_direction(clicked_cell, direction_vector, matche
     }
     return matches_connected;
 }
-
-
-// //looks for matches in the direction of movement passed by the parameters: row_movement and column_movement
-// function find_matches_in_single_direction(row_movement, column_movement) {
-//     var does_not_exist = false;     //variable to keep track if the new cell actually exists/ falls within the game board
-//     var does_not_match = false;     //variable to keep track if the new cell matches the original cell clicked
-//
-//     current_row = parseInt(clicked_row);
-//     current_column = parseInt(clicked_column);
-//
-//     while(!does_not_exist && !does_not_match && !you_won){
-//         //don't just decrease column add the component parts of the row and column to the clicked cell
-//         current_row += row_movement;
-//         current_column += column_movement;
-//
-//         //check to see if the cell exists
-//         if((0 <= current_row && current_row < game_board_size) &&
-//             (0 <= current_column && current_column < game_board_size)){   //check to see that current row and column are within the  scope of game board data
-//             if(stored_array[clicked_row][clicked_column] === stored_array[current_row][current_column]){   //if clicked cell's data equals current cell's data
-//                 matches_connected++;         //increase the number of connected
-//                 if(matches_connected >= win_length){
-//                     console.log('you won');
-//                     you_won = true;
-//                 }
-//             }else{  //numbers in the cells do not match in this direction
-//                 does_not_match = true;
-//             }
-//         }else{  //the cell does not exist in the game board data
-//             does_not_exist = true;
-//         }
-//     }
-// }
