@@ -1,37 +1,37 @@
 //list of variables
 var game_board_size = null;
 var stored_game_data = null;
-var its_player_ones_turn = null;
+var its_player_ones_turn = true;
 
 
 $(document).ready(function(){
     $("#new_game").click(function(){  //when the new game link is clicked, the game board is cleared of all elements.
-        $(".game_board").empty();   //Without this, the squares would continue to append on tp of each other each time a new game is started.
+        $(".game_board").empty();     //Without this, the squares would continue to append on tp of each other each time a new game is started.
     });
 });
 
 function create_game_board() {
     // game_board_size = 3;        //temporarily hard set game_board_size
     // size_of_board = 5;          //temporarily hard set to 3
-    stored_game_data = [];      //reset stored_game_data to blank array
-    its_player_ones_turn = true;        //at start of the game player one will start
+    stored_game_data = [];        //reset stored_game_data to blank array
+    its_player_ones_turn = true;  //at start of the game player one will start
 
-    for (var row = 0; row < size_of_board; row++) {         //run through the rows from row 0 through the end of the game board
-        stored_game_data[row] = [];         //create empty row of game data
-        var row_of_divs = $('<div>');       //create a dom element of a row for cells to go into
+    for (var row = 0; row < size_of_board; row++) {  //run through the rows from row 0 through the end of the game board
+        stored_game_data[row] = [];                  //create empty row of game data
+        var row_of_divs = $('<div>');                //create a dom element of a row for cells to go into
 
-        for (var column = 0; column < size_of_board; column++) {     //run through the columns from column 0 through the length of the game board
-            stored_game_data[row][column] = null;      //create the empty cell in the array
+        for (var column = 0; column < size_of_board; column++) {   //run through the columns from column 0 through the length of the game board
+            stored_game_data[row][column] = null;                  //create the empty cell in the array
 
-            var cell = $('<div>').addClass('cell').attr('row',row).attr('column', column).addClass('mark_spot');      //create the cell DOM element with attributes row and column
-            row_of_divs.append(cell);       //append the cell to the row
+            var cell = $('<div>').addClass('cell').attr('row',row).attr('column', column).addClass('selection_box');      //create the cell DOM element with attributes row and column
+            row_of_divs.append(cell);         //append the cell to the row
         }
-        $('.game_board').append(row_of_divs);      //append the row to the game board
+        $('.game_board').append(row_of_divs); //append the row to the game board
     }
 }
 
 function player_make_move(){
-  $('.mark_spot').click(area_checked);
+  $('.selection_box').click(area_checked);
 }
 
 function area_checked(){
@@ -52,10 +52,13 @@ function area_checked(){
     }else {
         console.log('spot taken');      //not sure we need this case //leave it just in case there is something to account for
     }
-
+    place_symbol_in_cell($(this), stored_game_data[row][column]);
     console.log(stored_game_data);
 }
 
+function place_symbol_in_cell(target_cell, player_number){
+  target_cell.text(player_number);
+}
 //set game board size
 //game board size parameter is passed when the player clicks on the game board selection screen
 function set_game_board_size(size) {

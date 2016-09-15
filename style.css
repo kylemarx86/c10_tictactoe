@@ -41,6 +41,7 @@ header{
     color: white;
     font-family: 'Faster One', cursive;
 }
+
 .player2_side{
     background-image: url("img/russian.png");
     background-repeat: no-repeat;
@@ -74,18 +75,20 @@ header{
 .game_board{
     text-align: center;
     font-size: 0;
+    height: 100vh;
 }
 
-.mark_spot{
+.selection_box{
     display: inline-block;
     width: 2vw;
     height: 2vw;
-    line-height: 200px;
     background-color: #040508;
     color: #ffffff;
     text-align: center;
     border: 1px solid white;
-    font-size: inherit;
+    vertical-align: bottom;
+    font-size: 2vh;
+    text-align: center;
 }
 
 /* .modal is referring to the screen/window that pops up when New Game is clicked */
@@ -120,6 +123,7 @@ header{
     background: #000000;
     color: white;
 }
+
 /* this is for the links in the popup board size selection screen */
 .modalDialog button {
     border: 1px solid white;
