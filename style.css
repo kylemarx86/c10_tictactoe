@@ -1,5 +1,6 @@
 body{
  margin: 0;
+    background-color: black;
 }
 
 h1{
@@ -91,7 +92,7 @@ header{
 /* .modal is referring to the screen/window that pops up when New Game is clicked */
 .modalDialog {
     position: fixed;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Faster One', cursive;
     top: 0;
     right: 0;
     bottom: 0;
@@ -119,36 +120,32 @@ header{
     border-radius: 20px;
     background: #000000;
     color: white;
+    font-family: 'Faster One', cursive;
+    font-size: 2em;
 }
-/* this is for the links in the popup board size selection screen */
+/* this is for the text in the buttons on the popup board size selection screen*/
 .modalDialog button {
     border: 1px solid white;
     background-color: black;
-    border-radius: 20%
-}
-
-/* this is for the links in the popup board size selection screen */
-.modalDialog a:link,
-.modalDialog a:active,
-.modalDialog a:hover,
-.modalDialog a:visited {
+    border-radius: 20%;
     color: white;
 }
 
-#new_game a:link,
-#new_game a:active,
-#new_game a:hover,
-#new_game a:visited {
-    float: right;
-    bottom: 10%;
+/* this is for the buttons in the popup board size selection screen */
+a.close {
+    text-decoration: none;
+    color: white;
+}
+
+#new_game a {
     display: inline-block;
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Faster One', cursive;
     text-decoration: none;
-    font-weight: bold;
-    border: 1px solid white;
-    border-radius: 15%;
-    /*border: 1px solid black;*/
+    /*border: 1px solid white;*/
+    width: 100%;
+    font-size: 1.5em;
+    text-align: center;
 }
 
 footer{
