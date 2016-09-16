@@ -38,10 +38,11 @@ function start_turn_timer() {
     turn_timer = setInterval(turn_timer_countdown, 1000);
 }
 
+
 function turn_timer_countdown() {
     current_turn_time++;
     display_remaining_time();
-    if (current_turn_time === max_turn_time && you_won !== true) {
+    if (current_turn_time === max_turn_time) {
         alert("Your pro-cat-stination has lost you a turn");
         toggle_player();
     }
@@ -83,7 +84,13 @@ function toggle_player() {
         $(".player2_side").addClass('current_player');
 
     }
-    start_turn_timer();
+    if (!you_won) {
+        start_turn_timer();
+    }
+    else {
+        clearInterval(turn_timer);
+        $("#remaining_time").text("");
+    }
 }
 
 
