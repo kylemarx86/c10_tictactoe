@@ -69,7 +69,17 @@ header{
     color: white;
     font-family: 'Faster One', cursive;
 }
+.current_player{
+    background-color: red;
+}
+#remaining_time{
+    color: white;
+    font-size: 3em;
+    font-family: 'Allerta Stencil', sans-serif;
+    position: absolute;
+    left: 21%;
 
+}
 .game_logo{
     display: block;
     margin: 0 auto;
