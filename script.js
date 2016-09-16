@@ -41,7 +41,7 @@ function turn_timer_countdown(){
     current_turn_time++;
     display_remaining_time();
     if(current_turn_time===max_turn_time) {
-        alert("Too Slow, Lose a Turn");
+        alert("Your pro-cat-stination has lost you a turn");
         toggle_player();
     }
 }
@@ -49,9 +49,6 @@ function turn_timer_countdown(){
 function display_remaining_time(){
     $("#remaining_time").text(max_turn_time-current_turn_time);
 }
-// clearTimeout();
-// setTimeout(turn_timer, 7000);
-
 
 function player_make_move(){
   $('.selection_box').click(area_checked);
