@@ -20,6 +20,7 @@ $(document).ready(function () {
 function create_game_board() {
     stored_game_data = [];      //reset stored_game_data to blank array
     its_player_ones_turn = true;        //at start of the game player one will start
+    $(".current_player").removeClass('current_player');      //clears any previous markers for previous player
     $(".player1_side").addClass('current_player');      //initializes visual for player 1
     turns_taken = 0;                                //sets the number of turns taken to 0
 
@@ -77,19 +78,21 @@ function area_checked() {
         }
         toggle_player();
     }
-    place_symbol_in_cell($(this), stored_game_data[row][column]);
+    place_symbol_in_cell($(this), stored_game_data[row][column]);       //consider moving up into the if statement BEFORE THE TOGGLE so that we can pass its_player_ones_turn instead of creating the new variable
 }
 //toggle player function
 function toggle_player() {
     its_player_ones_turn = !its_player_ones_turn;       //if the person made a legitimate move then the players turn will switch
     $('.current_player').removeClass('current_player'); //current player class is removed from player
-    if (its_player_ones_turn) {
-        $(".player1_side").addClass('current_player'); //if it's p1 turn, current player class is added to p1
-    } else {
-        $(".player2_side").addClass('current_player');  //otherwise if it is p2's turn, current player class is added to p2
-    }
+
     if (!you_won) {
+        if (its_player_ones_turn) {
+            $(".player1_side").addClass('current_player'); //if it's p1 turn, current player class is added to p1
+        } else {
+            $(".player2_side").addClass('current_player');  //otherwise if it is p2's turn, current player class is added to p2
+        }
         if(check_for_ties()){
+            $('.current_player').removeClass('current_player'); //current player class is removed from player
             $(".notification_area").text("It's a cat's game!! Aren't they all?!");  //display the text tie message
             clearInterval(turn_timer);              //stops the countdown timer
             $("#remaining_time").text("");          //blanks out the remaining time
@@ -105,9 +108,8 @@ function toggle_player() {
     }
 }
 
-
+//consider not using player_number as a variable but reuse the its_player_ones_turn
 function place_symbol_in_cell(target_cell, player_number) {
-
     var player_mark;
     if (player_number === 1) {
         player_mark = "X";
@@ -116,9 +118,6 @@ function place_symbol_in_cell(target_cell, player_number) {
     }
     target_cell.text(player_mark);
 }
-
-//Determine Wins
-
 
 //set game board size
 //game board size parameter is passed when the player clicks on the game board selection screen
@@ -130,8 +129,6 @@ function set_game_board_size(size) {
     player_make_move();
     start_turn_timer();
 }
-
-//build board dynamically based on chosen board size (visually)
 
 //choose random # of matches needed to win
 // function is called when the board size is selected.
@@ -153,6 +150,7 @@ function num_of_winning_matches_needed(size) {
     else {
         winning_matches = Math.floor(Math.random() * 17 + 4);
     }
+    //the following will create notification to the players on the number of wins needed to win the game.
     var $win_condition = $('<span>').addClass('win_condition').html(winning_matches + 'in a row');
     $('.notification_area').empty().append('Connect ').append($win_condition).append(' to win!');
 }
@@ -271,6 +269,7 @@ function find_matches_in_single_direction(clicked_cell, direction_vector, matche
     return matches_connected;
 }
 
+// function that checks for ties by comparing the number of turns taken to the total number of possible turns (max_turns)
 function check_for_ties(){
     if (turns_taken >= max_turns) {
         return true;

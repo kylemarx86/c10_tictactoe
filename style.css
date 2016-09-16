@@ -182,7 +182,7 @@ a.close {
     text-align: center;
     position: relative;
 }
-
+/* music styling controls */
 #music {
     text-align: center;
     position: absolute;
@@ -197,7 +197,6 @@ a.close {
     font-size: 1em;
     display: inline-block;
     font-family: 'Faster One', cursive;
-
 }
 
 /* footer area */
