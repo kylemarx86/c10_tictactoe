@@ -7,6 +7,9 @@ var its_player_ones_turn = true;
 var turn_timer = null;
 var max_turn_time = 7;
 var current_turn_time = 0;
+var max_turns = null;
+var turns_taken = null;
+
 $(document).ready(function () {
     $("#new_game").click(function () {  //when the new game link is clicked, the game board is cleared of all elements.
         $(".game_board").empty();     //Without this, the squares would continue to append on tp of each other each time a new game is started.
@@ -17,6 +20,8 @@ $(document).ready(function () {
 function create_game_board() {
     stored_game_data = [];      //reset stored_game_data to blank array
     its_player_ones_turn = true;        //at start of the game player one will start
+    $(".player1_side").addClass('current_player');      //initializes visual for player 1
+    turns_taken = 0;                                //sets the number of turns taken to 0
 
     for (var row = 0; row < game_board_size; row++) {         //run through the rows from row 0 through the end of the game board
         stored_game_data[row] = [];         //create empty row of game data
@@ -61,6 +66,7 @@ function area_checked() {
     var column = $(this).attr('column');
 
     if (stored_game_data[row][column] === null) {     //check to see if the clicked cell is null/empty
+        turns_taken++;
         if (its_player_ones_turn) {
             stored_game_data[row][column] = 1;    //if it is player ones turn put a one in the given cell of the game array
             check_for_wins(row, column);            //check for wins
@@ -85,11 +91,19 @@ function toggle_player() {
 
     }
     if (!you_won) {
-        start_turn_timer();
-    }
-    else {
-        clearInterval(turn_timer);
-        $("#remaining_time").text("");
+        if(check_for_ties()){
+            $(".notification_area").text("It's a cat's game!! Aren't they all?!");  //display the text tie message
+            clearInterval(turn_timer);              //stops the countdown timer
+            $("#remaining_time").text("");          //blanks out the remaining time
+            $('.selection_box').unbind();           //disables further clicks in the game area
+        }
+        else {
+            start_turn_timer();                     //starts the timer for the next turn
+        }
+    } else {
+        clearInterval(turn_timer);              //stops the countdown timer
+        $("#remaining_time").text("");          //blanks out the remaining time
+        $('.selection_box').unbind();           //disables further clicks in the game area
     }
 }
 
@@ -112,6 +126,7 @@ function place_symbol_in_cell(target_cell, player_number) {
 //game board size parameter is passed when the player clicks on the game board selection screen
 function set_game_board_size(size) {
     game_board_size = size;
+    max_turns = game_board_size * game_board_size;
     num_of_winning_matches_needed(game_board_size);
     create_game_board();
     player_make_move();
@@ -268,6 +283,14 @@ function find_matches_in_single_direction(clicked_cell, direction_vector, matche
         }
     }
     return matches_connected;
+}
+
+function check_for_ties(){
+    if (turns_taken >= max_turns) {
+        return true;
+    }else {
+       return false;
+    }
 }
 
 function aud_play_pause() {
