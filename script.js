@@ -75,9 +75,7 @@ function area_checked() {
             stored_game_data[row][column] = 2;       //if it is player twos turn put a 2 in the given cell of the game array
             check_for_wins(row, column);                //check for wins
         }
-        toggle_player();  //toggle player function is called
-    } else {
-        console.log('spot taken');      //not sure we need this case //leave it just in case there is something to account for
+        toggle_player();
     }
     place_symbol_in_cell($(this), stored_game_data[row][column]);
 }
@@ -89,7 +87,6 @@ function toggle_player() {
         $(".player1_side").addClass('current_player'); //if it's p1 turn, current player class is added to p1
     } else {
         $(".player2_side").addClass('current_player');  //otherwise if it is p2's turn, current player class is added to p2
-
     }
     if (!you_won) {
         if(check_for_ties()){
@@ -143,21 +140,18 @@ function num_of_winning_matches_needed(size) {
     //if board is 3x3, # of matches needed to win will be 3
     if (size === 3) {
         winning_matches = 3;
-        console.log("number of matches needed for 3x3 board: " + winning_matches);
     }
     //if board is 9x9
     //Math.Random gives random # from 0 - .9999[...]
     // Math.floor gives whole number, *3 + 3 multiplies whole number by 6 and adds 3 (minimum # of matches needed are 3).
     else if (size === 9) {
         winning_matches = Math.floor(Math.random() * 6 + 4);
-        console.log("number of matches needed for 9x9 board: " + winning_matches);
     }
     //otherwise, for a 20x20 board,
     //Math.Random gives random # from 0 - .9999[...]
     // Math.floor gives whole number, *17 + 3 multiplies whole number by 17 and adds 3 (minimum # of matches needed are 3).
     else {
         winning_matches = Math.floor(Math.random() * 17 + 4);
-        console.log("number of matches needed for 20x20 board: " + winning_matches);
     }
     var $win_condition = $('<span>').addClass('win_condition').html(winning_matches + 'in a row');
     $('.notification_area').empty().append('Connect ').append($win_condition).append(' to win!');
@@ -196,9 +190,7 @@ function check_for_wins(clicked_row, clicked_column) {
         if (matches_connected >= winning_matches) {
             you_won = true;
             notify_player_won();
-            console.log('you won!!!');
         }
-        console.log('number matching in row: ' + matches_connected);
     }
     if (!you_won) {
         //check columns for wins
@@ -211,9 +203,7 @@ function check_for_wins(clicked_row, clicked_column) {
         if (matches_connected >= winning_matches) {
             you_won = true;
             notify_player_won();
-            console.log('you won!!!');
         }
-        console.log('number matching in column: ' + matches_connected);
     }
     if (!you_won) {
         //check right diagonal for wins
@@ -226,9 +216,7 @@ function check_for_wins(clicked_row, clicked_column) {
         if (matches_connected >= winning_matches) {
             you_won = true;
             notify_player_won();
-            console.log('you won!!!');
         }
-        console.log('number matching in diag1: ' + matches_connected);
     }
     if (!you_won) {
         //check left diagonal for wins
@@ -241,9 +229,7 @@ function check_for_wins(clicked_row, clicked_column) {
         if (matches_connected >= winning_matches) {
             you_won = true;
             notify_player_won();
-            console.log('you won!!!');
         }
-        console.log('number matching in diag2: ' + matches_connected);
     }
 }
 
@@ -272,8 +258,7 @@ function find_matches_in_single_direction(clicked_cell, direction_vector, matche
             (0 <= current_column && current_column < game_board_size)) {
             if (stored_game_data[clicked_cell.row][clicked_cell.column] === stored_game_data[current_row][current_column]) {   //if clicked cell's data equals current cell's data
                 matches_connected++;         //increase the number of connected
-                if (matches_connected >= winning_matches) {
-                    console.log('you won');
+                if (matches_connected >= winning_matches) {     //checks whether the number of matches in a row connect are enough to win the game
                     return matches_connected;
                 }
             } else {  //numbers in the cells do not match in this direction
