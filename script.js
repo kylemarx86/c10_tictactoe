@@ -3,7 +3,9 @@ var game_board_size = null;
 var stored_game_data = null;
 var winning_matches = null;
 var its_player_ones_turn = true;
-
+var turn_timer =null;
+var max_turn_time = 7;
+var current_turn_time = 0;
 $(document).ready(function(){
     $("#new_game").click(function(){  //when the new game link is clicked, the game board is cleared of all elements.
         $(".game_board").empty();     //Without this, the squares would continue to append on tp of each other each time a new game is started.
@@ -28,6 +30,27 @@ function create_game_board() {
     }
 }
 
+function start_turn_timer(){
+        current_turn_time=0;
+      clearInterval(turn_timer);
+      turn_timer = setInterval(turn_timer_countdown, 1000);
+
+}
+function turn_timer_countdown(){
+    current_turn_time++;
+    display_remaining_time();
+    if(current_turn_time===max_turn_time) {
+        alert("Too Slow, Lose a Turn");
+        toggle_player();
+    }
+}
+
+function display_remaining_time(){
+    $("#remaining_time").text(max_turn_time-current_turn_time);
+}
+// clearTimeout();
+// setTimeout(turn_timer, 7000);
+
 
 function player_make_move(){
   $('.selection_box').click(area_checked);
@@ -45,12 +68,25 @@ function area_checked() {
             stored_game_data[row][column] = 2;       //if it is player twos turn put a 2 in the given cell of the game array
             check_for_wins(row, column);                //check for wins
         }
-        its_player_ones_turn = !its_player_ones_turn;       //if the person made a legitimate move then the players turn will switch
+        toggle_player();
     } else {
         console.log('spot taken');      //not sure we need this case //leave it just in case there is something to account for
     }
     place_symbol_in_cell($(this), stored_game_data[row][column]);
 }
+
+function toggle_player() {
+    its_player_ones_turn = !its_player_ones_turn;       //if the person made a legitimate move then the players turn will switch
+    $('.current_player').removeClass('current_player');
+    if(its_player_ones_turn){
+        $(".player1_side").addClass('current_player');
+    } else{
+        $(".player2_side").addClass('current_player');
+
+    }
+    start_turn_timer();
+}
+
 
 function place_symbol_in_cell(target_cell, player_number){
   
@@ -73,6 +109,7 @@ function set_game_board_size(size) {
     num_of_winning_matches_needed(game_board_size);
     create_game_board();
     player_make_move();
+    start_turn_timer();
 }
 
 //build board dynamically based on chosen board size (visually)
