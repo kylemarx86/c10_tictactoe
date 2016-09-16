@@ -1,13 +1,14 @@
 //list of variables
+var you_won = false;
 var game_board_size = null;
 var stored_game_data = null;
 var winning_matches = null;
 var its_player_ones_turn = true;
-var turn_timer =null;
+var turn_timer = null;
 var max_turn_time = 7;
 var current_turn_time = 0;
-$(document).ready(function(){
-    $("#new_game").click(function(){  //when the new game link is clicked, the game board is cleared of all elements.
+$(document).ready(function () {
+    $("#new_game").click(function () {  //when the new game link is clicked, the game board is cleared of all elements.
         $(".game_board").empty();     //Without this, the squares would continue to append on tp of each other each time a new game is started.
         $(".notification_area").empty(); //clears any messages previously displayed to player
     });
@@ -24,45 +25,46 @@ function create_game_board() {
         for (var column = 0; column < game_board_size; column++) {     //run through the columns from column 0 through the length of the game board
             stored_game_data[row][column] = null;      //create the empty cell in the array
 
-            var cell = $('<div>').addClass('cell').attr('row',row).attr('column', column).addClass('selection_box');      //create the cell DOM element with attributes row and column
+            var cell = $('<div>').addClass('cell').attr('row', row).attr('column', column).addClass('selection_box');      //create the cell DOM element with attributes row and column
             row_of_divs.append(cell);         //append the cell to the row
         }
         $('.game_board').append(row_of_divs); //append the row to the game board
     }
 }
 
-function start_turn_timer(){
-        current_turn_time=0;
-      clearInterval(turn_timer);
-      turn_timer = setInterval(turn_timer_countdown, 1000);
-
+function start_turn_timer() {
+    current_turn_time = 0;
+    clearInterval(turn_timer);
+    turn_timer = setInterval(turn_timer_countdown, 1000);
 }
-function turn_timer_countdown(){
+
+
+function turn_timer_countdown() {
     current_turn_time++;
     display_remaining_time();
-    if(current_turn_time===max_turn_time) {
+    if (current_turn_time === max_turn_time) {
         alert("Your pro-cat-stination has lost you a turn");
         toggle_player();
     }
 }
 
-function display_remaining_time(){
-    $("#remaining_time").text(max_turn_time-current_turn_time);
+function display_remaining_time() {
+    $("#remaining_time").text(max_turn_time - current_turn_time);
 }
 
-function player_make_move(){
-  $('.selection_box').click(area_checked);
+function player_make_move() {
+    $('.selection_box').click(area_checked);
 }
 
 function area_checked() {
     var row = $(this).attr('row');
     var column = $(this).attr('column');
-  
-    if(stored_game_data[row][column] === null){     //check to see if the clicked cell is null/empty
-        if(its_player_ones_turn){
+
+    if (stored_game_data[row][column] === null) {     //check to see if the clicked cell is null/empty
+        if (its_player_ones_turn) {
             stored_game_data[row][column] = 1;    //if it is player ones turn put a one in the given cell of the game array
             check_for_wins(row, column);            //check for wins
-        }else {
+        } else {
             stored_game_data[row][column] = 2;       //if it is player twos turn put a 2 in the given cell of the game array
             check_for_wins(row, column);                //check for wins
         }
@@ -76,25 +78,31 @@ function area_checked() {
 function toggle_player() {
     its_player_ones_turn = !its_player_ones_turn;       //if the person made a legitimate move then the players turn will switch
     $('.current_player').removeClass('current_player');
-    if(its_player_ones_turn){
+    if (its_player_ones_turn) {
         $(".player1_side").addClass('current_player');
-    } else{
+    } else {
         $(".player2_side").addClass('current_player');
 
     }
-    start_turn_timer();
+    if (!you_won) {
+        start_turn_timer();
+    }
+    else {
+        clearInterval(turn_timer);
+        $("#remaining_time").text("");
+    }
 }
 
 
-function place_symbol_in_cell(target_cell, player_number){
-  
-  var player_mark;
-  if (player_number === 1){
-    player_mark = "X";
-  }else{
-    player_mark = "O";
-  }
-  target_cell.text(player_mark);
+function place_symbol_in_cell(target_cell, player_number) {
+
+    var player_mark;
+    if (player_number === 1) {
+        player_mark = "X";
+    } else {
+        player_mark = "O";
+    }
+    target_cell.text(player_mark);
 }
 
 //Determine Wins
@@ -135,19 +143,15 @@ function num_of_winning_matches_needed(size) {
         winning_matches = Math.floor(Math.random() * 17 + 4);
         console.log("number of matches needed for 20x20 board: " + winning_matches);
     }
-
-    // $('.notification_area').text('Connect ' + winning_matches + ' in a row to win.');
-    // $('.notification_area').html('Connect +<span class="win_condition">winning_matches</span>+ in a row to win.');
     var $win_condition = $('<span>').addClass('win_condition').html(winning_matches + 'in a row');
     $('.notification_area').empty().append('Connect ').append($win_condition).append(' to win!');
-    // $('.notification_area').append('Connect').append(<span class="win_condition">)winning_matches</span>+ in a row to win.');
 }
 
 //end game: stop all movements, initiate end game screen
 
 //function that will check if the currently clicked spot creates a win condition
-function check_for_wins(clicked_row, clicked_column){
-    var you_won = false;
+function check_for_wins(clicked_row, clicked_column) {
+    you_won = false;
 
     var current_row = null;
     var current_column = null;
@@ -155,17 +159,17 @@ function check_for_wins(clicked_row, clicked_column){
     var clicked_cell = {'row': clicked_row, 'column': clicked_column};
     var direction_vector = {'row': null, 'column': null};
     var matches_connected = null;
-    
+
     //Indicate player has won
-        function notify_player_won(){
-            if (you_won === true && its_player_ones_turn === true) {
-                $(".notification_area").text("SPACE CAT Wins!!");
-            }else if (you_won === true && its_player_ones_turn !== true){
-                $(".notification_area").text("Congratulations Comrade.  You won!");
-            }
+    function notify_player_won() {
+        if (you_won === true && its_player_ones_turn === true) {
+            $(".notification_area").text("SPACE CAT Wins!!");
+        } else if (you_won === true && its_player_ones_turn !== true) {
+            $(".notification_area").text("Congratulations Comrade.  You won!");
         }
-        
-    if(!you_won){
+    }
+
+    if (!you_won) {
         //check row for wins
         matches_connected = 1;
         direction_vector = {row: 0, column: -1};                        //checking left
@@ -173,14 +177,14 @@ function check_for_wins(clicked_row, clicked_column){
         direction_vector = {row: 0, column: 1};                         //checking right
         matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        if(matches_connected >= winning_matches) {
+        if (matches_connected >= winning_matches) {
             you_won = true;
             notify_player_won();
             console.log('you won!!!');
         }
         console.log('number matching in row: ' + matches_connected);
     }
-    if(!you_won){
+    if (!you_won) {
         //check columns for wins
         matches_connected = 1;
         direction_vector = {row: -1, column: 0};                        //checking up
@@ -188,14 +192,14 @@ function check_for_wins(clicked_row, clicked_column){
         direction_vector = {row: 1, column: 0};                        //checking down
         matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        if(matches_connected >= winning_matches) {
+        if (matches_connected >= winning_matches) {
             you_won = true;
             notify_player_won();
             console.log('you won!!!');
         }
         console.log('number matching in column: ' + matches_connected);
     }
-    if(!you_won){
+    if (!you_won) {
         //check right diagonal for wins
         matches_connected = 1;
         direction_vector = {row: -1, column: -1};                           //checking up-left
@@ -203,14 +207,14 @@ function check_for_wins(clicked_row, clicked_column){
         direction_vector = {row: 1, column: 1};                             //checking down-right
         matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        if(matches_connected >= winning_matches) {
+        if (matches_connected >= winning_matches) {
             you_won = true;
             notify_player_won();
             console.log('you won!!!');
         }
         console.log('number matching in diag1: ' + matches_connected);
     }
-    if(!you_won){
+    if (!you_won) {
         //check left diagonal for wins
         matches_connected = 1;
         direction_vector = {row: -1, column: 1};                        //checking up-right
@@ -218,7 +222,7 @@ function check_for_wins(clicked_row, clicked_column){
         direction_vector = {row: 1, column: -1};                        //checking down-left
         matches_connected = find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected);
 
-        if(matches_connected >= winning_matches) {
+        if (matches_connected >= winning_matches) {
             you_won = true;
             notify_player_won();
             console.log('you won!!!');
@@ -228,10 +232,10 @@ function check_for_wins(clicked_row, clicked_column){
 }
 
 //looks for matches in the direction of movement passed by the parameters
-    //params: clicked_cell: the original cell that was clicked passed as an object containing row and column
-    //params: direction_vector: the direction we want to check for matches in. Passed as an object containing row and column
-    //params: mathces_connected: the number of consecutive squares that match the clicked square (including the clicked square itself)
-    //return: matches_connected: the number of consecutive squares that match the clicked square (including the clicked square itself)
+//params: clicked_cell: the original cell that was clicked passed as an object containing row and column
+//params: direction_vector: the direction we want to check for matches in. Passed as an object containing row and column
+//params: mathces_connected: the number of consecutive squares that match the clicked square (including the clicked square itself)
+//return: matches_connected: the number of consecutive squares that match the clicked square (including the clicked square itself)
 function find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected) {
     var does_not_exist = false;     //variable to keep track if the new cell actually exists/ falls within the game board
     var does_not_match = false;     //variable to keep track if the new cell matches the original cell clicked
