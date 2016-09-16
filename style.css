@@ -80,7 +80,10 @@ header{
 /* notification_area */
 .notification_area{
  height: 100px;
- background-color: #000000;
+ background-color: red;
+ margin-bottom: 5%;
+    font-size: 15px;
+    color: white;
 }
 
 /* Main Game Area */
