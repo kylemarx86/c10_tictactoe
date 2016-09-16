@@ -79,9 +79,17 @@ header{
 
 /* notification_area */
 .notification_area{
- height: 100px;
- background-color: #000000;
+    height: 100px;
+    background-color: #000000;
+    text-align: center;
+    color: white;
+    font-size: 2em;
+    font-family: 'Faster One', cursive;
 }
+.win_condition{
+    color: yellow;
+}
+
 
 /* Main Game Area */
 .game_board{

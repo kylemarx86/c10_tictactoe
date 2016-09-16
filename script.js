@@ -100,6 +100,12 @@ function num_of_winning_matches_needed(size) {
         winning_matches = Math.floor(Math.random() * 17 + 4);
         console.log("number of matches needed for 20x20 board: " + winning_matches);
     }
+
+    // $('.notification_area').text('Connect ' + winning_matches + ' in a row to win.');
+    // $('.notification_area').html('Connect +<span class="win_condition">winning_matches</span>+ in a row to win.');
+    var $win_condition = $('<span>').addClass('win_condition').html(winning_matches + 'in a row');
+    $('.notification_area').empty().append('Connect ').append($win_condition).append(' to win!');
+    // $('.notification_area').append('Connect').append(<span class="win_condition">)winning_matches</span>+ in a row to win.');
 }
 
 //end game: stop all movements, initiate end game screen
