@@ -85,6 +85,7 @@ header{
     color: white;
     font-size: 2em;
     font-family: 'Faster One', cursive;
+    margin-bottom: 5%;
 }
 .win_condition{
     color: yellow;

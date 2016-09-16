@@ -7,6 +7,7 @@ var its_player_ones_turn = true;
 $(document).ready(function(){
     $("#new_game").click(function(){  //when the new game link is clicked, the game board is cleared of all elements.
         $(".game_board").empty();     //Without this, the squares would continue to append on tp of each other each time a new game is started.
+        $(".notification_area").empty(); //clears any messages previously displayed to player
     });
 });
 
@@ -120,7 +121,16 @@ function check_for_wins(clicked_row, clicked_column){
     var clicked_cell = {'row': clicked_row, 'column': clicked_column};
     var direction_vector = {'row': null, 'column': null};
     var matches_connected = null;
-
+    
+    //Indicate player has won
+        function notify_player_won(){
+            if (you_won === true && its_player_ones_turn === true) {
+                $(".notification_area").text("PLAYER 1 has won!");
+            }else{
+                $(".notification_area").text("PLAYER 2 has won!");
+                }
+            }
+        
     if(!you_won){
         //check row for wins
         matches_connected = 1;
@@ -131,6 +141,7 @@ function check_for_wins(clicked_row, clicked_column){
 
         if(matches_connected >= winning_matches) {
             you_won = true;
+            notify_player_won();
             console.log('you won!!!');
         }
         console.log('number matching in row: ' + matches_connected);
@@ -145,6 +156,7 @@ function check_for_wins(clicked_row, clicked_column){
 
         if(matches_connected >= winning_matches) {
             you_won = true;
+            notify_player_won();
             console.log('you won!!!');
         }
         console.log('number matching in column: ' + matches_connected);
@@ -159,6 +171,7 @@ function check_for_wins(clicked_row, clicked_column){
 
         if(matches_connected >= winning_matches) {
             you_won = true;
+            notify_player_won();
             console.log('you won!!!');
         }
         console.log('number matching in diag1: ' + matches_connected);
@@ -173,6 +186,7 @@ function check_for_wins(clicked_row, clicked_column){
 
         if(matches_connected >= winning_matches) {
             you_won = true;
+            notify_player_won();
             console.log('you won!!!');
         }
         console.log('number matching in diag2: ' + matches_connected);
