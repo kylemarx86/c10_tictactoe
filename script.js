@@ -37,22 +37,23 @@ function create_game_board() {
     }
 }
 
+//timer function start
 function start_turn_timer() {
     current_turn_time = 0;
-    clearInterval(turn_timer);
-    turn_timer = setInterval(turn_timer_countdown, 1000);
+    clearInterval(turn_timer); //prevents the alert popup occurring when the player has taken their turn within the time frame allotted.
+    turn_timer = setInterval(turn_timer_countdown, 1000); //variable calls the timer countdown function and does its increments in 1 second
 }
 
-
+//timer countdown function
 function turn_timer_countdown() {
-    current_turn_time++;
-    display_remaining_time();
-    if (current_turn_time === max_turn_time) {
-        alert("Your pro-cat-stination has lost you a turn");
-        toggle_player();
+    current_turn_time++;  //increases increments of current turn time by one
+    display_remaining_time(); //calls display function
+    if (current_turn_time === max_turn_time) { //conditional statment, if the current turn time is the same as max turn time,
+        alert("Your pro-cat-stination has lost you a turn"); //the 'lose-a-turn' alert box w/ cat pun appears
+        toggle_player(); //toggle player function is called, and the player is toggled
     }
 }
-
+//function to display the remaining time in the countdown
 function display_remaining_time() {
     $("#remaining_time").text(max_turn_time - current_turn_time);
 }
@@ -74,20 +75,20 @@ function area_checked() {
             stored_game_data[row][column] = 2;       //if it is player twos turn put a 2 in the given cell of the game array
             check_for_wins(row, column);                //check for wins
         }
-        toggle_player();
+        toggle_player();  //toggle player function is called
     } else {
         console.log('spot taken');      //not sure we need this case //leave it just in case there is something to account for
     }
     place_symbol_in_cell($(this), stored_game_data[row][column]);
 }
-
+//toggle player function
 function toggle_player() {
     its_player_ones_turn = !its_player_ones_turn;       //if the person made a legitimate move then the players turn will switch
-    $('.current_player').removeClass('current_player');
+    $('.current_player').removeClass('current_player'); //current player class is removed from player
     if (its_player_ones_turn) {
-        $(".player1_side").addClass('current_player');
+        $(".player1_side").addClass('current_player'); //if it's p1 turn, current player class is added to p1
     } else {
-        $(".player2_side").addClass('current_player');
+        $(".player2_side").addClass('current_player');  //otherwise if it is p2's turn, current player class is added to p2
 
     }
     if (!you_won) {
@@ -249,7 +250,7 @@ function check_for_wins(clicked_row, clicked_column) {
 //looks for matches in the direction of movement passed by the parameters
 //params: clicked_cell: the original cell that was clicked passed as an object containing row and column
 //params: direction_vector: the direction we want to check for matches in. Passed as an object containing row and column
-//params: mathces_connected: the number of consecutive squares that match the clicked square (including the clicked square itself)
+//params: matches_connected: the number of consecutive squares that match the clicked square (including the clicked square itself)
 //return: matches_connected: the number of consecutive squares that match the clicked square (including the clicked square itself)
 function find_matches_in_single_direction(clicked_cell, direction_vector, matches_connected) {
     var does_not_exist = false;     //variable to keep track if the new cell actually exists/ falls within the game board
@@ -292,12 +293,12 @@ function check_for_ties(){
        return false;
     }
 }
-
+// function for toggling background music on & off
 function aud_play_pause() {
-    var myAudio = document.getElementById("myAudio");
-    if (myAudio.paused) {
-        myAudio.play();
+    var myAudio = document.getElementById("myAudio");  //variable created to get the element ID of #myAudio
+    if (myAudio.paused) {  //if the music is paused
+        myAudio.play();  //click on it to toggle play
     } else {
-        myAudio.pause();
+        myAudio.pause();  //otherwise if playing, toggle to pause
     }
 }
