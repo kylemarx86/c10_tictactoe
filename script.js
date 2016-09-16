@@ -162,11 +162,11 @@ function check_for_wins(clicked_row, clicked_column){
     //Indicate player has won
         function notify_player_won(){
             if (you_won === true && its_player_ones_turn === true) {
-                $(".notification_area").text("PLAYER 1 has won!");
-            }else{
-                $(".notification_area").text("PLAYER 2 has won!");
-                }
+                $(".notification_area").text("SPACE CAT Wins!!");
+            }else if (you_won === true && its_player_ones_turn !== true){
+                $(".notification_area").text("Congratulations Comrade.  You won!");
             }
+        }
         
     if(!you_won){
         //check row for wins
