@@ -14,7 +14,7 @@
   - Team 1 (Mindy, Kyle, Christian): Must add a special move, usable periodically, that in some way alters the current game board
   - Team 2 (Jason, Oleg, Daniel): Must add trivia requirement to place each square in a 3x3 game. For example: http://jservice.io/
   - Team 3 (Dave, Collette, Lance): Include the option for 2 teams of 2 players each with synergistic qualities. 
-
+<!--
 ### Judging criteria
 - Innovation
 - Attractiveness
@@ -27,3 +27,4 @@
 - Project lead fork this repo
 - Add other team members as participants on your repo (click on the + in the top right corner, then "add collaborators"
 - Other team members clone the repo from the project lead's fork
+--->
